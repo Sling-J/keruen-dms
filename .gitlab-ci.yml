@@ -1,0 +1,66 @@
+variables:
+  IMG_HOST: 'gcr.io'
+  CLUSTER_NAME: 'main-cluster'
+  GCP_REGION: 'europe-west1-c'
+  GCP_PROJECT_ID: 'vlife-280711'
+stages:
+  - build
+  - deploy
+  - error
+build:
+  stage: build
+  image: node:12
+  variables:
+    GCP_API_KEY: 'AIzaSyDw0XPf2jS33__77oxhcJRIVChao1ddFnI'
+  services:
+    - docker:stable-dind
+  script:
+    - if [[ "$CI_COMMIT_REF_NAME" == "dev" ]]; then
+    - export WS_ENV="enabled"
+    - export BASE_URL="https://api.dev.vlife.kz/"
+    - elif [[ "$CI_COMMIT_REF_NAME" == "master" ]]; then
+    - echo 'Change config'
+    - export WS_ENV="enabled"
+    - export BASE_URL="https://api.vlife.kz/"
+    - elif [[ "$CI_COMMIT_REF_NAME" == "test" ]]; then
+    - echo 'Change config'
+    - export WS_ENV="enabled"
+    - export BASE_URL="https://api-test.vlife.kz/"
+    - fi
+    - yarn
+    - yarn build
+    - rm -rf public
+    - mv dist public
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - public
+
+  only:
+    - master
+    - test
+    - dev
+  tags:
+    - vlife-eks
+
+deploy:
+  stage: deploy
+  image: viled/gcloud-helm:0.0.1
+  before_script:
+    - echo $KEY > /tmp/creds.json
+    - gcloud auth activate-service-account $GKE_SA_NAME --key-file=/tmp/creds.json --project=$GCP_PROJECT_ID
+    - gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION
+  script:
+    - cp -R docker/Dockerfile .
+    - cp nginx-$CI_COMMIT_REF_NAME.conf nginx.conf
+    - gcloud builds submit --tag ${IMG_HOST}/${GCP_PROJECT_ID}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID} --machine-type=e2-highcpu-8 --timeout=20m  .
+    - helm upgrade --install $CI_PROJECT_NAME-$CI_COMMIT_REF_NAME --namespace $CI_COMMIT_REF_NAME
+      --set image.repository=${IMG_HOST}/${GCP_PROJECT_ID}/${CI_PROJECT_NAME}
+      --set image.tag=$CI_PIPELINE_ID
+      .infra/$CI_PROJECT_NAME
+  only:
+    - master
+    - test
+    - dev
+  tags:
+    - vlife-eks

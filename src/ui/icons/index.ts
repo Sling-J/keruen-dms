@@ -1,0 +1,7 @@
+export { default as Icon } from './Icon'
+export * from './People'
+export * from './Icon'
+export * from './Auth'
+export * from './Logo'
+export * from './Mail'
+export * from './Lock'
