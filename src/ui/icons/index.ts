@@ -1,4 +1,5 @@
 export { default as Icon } from './Icon'
+export * from './ArrowBack'
 export * from './People'
 export * from './Icon'
 export * from './Auth'

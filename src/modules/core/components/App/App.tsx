@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { Box } from 'ui'
+import { Box, Wrapper } from 'ui'
 import { Navigation, Header } from 'modules/common/components'
 
 import { IRoute } from 'modules/common/types'
@@ -11,11 +11,13 @@ export interface AppProps {
 
 const App: FC<AppProps> = ({ children, routes }) => {
   return (
-    <Box>
+    <Box height='100%'>
       <Header />
       <Navigation routes={routes} />
 
-      {children}
+      <Box mt='24px' height='100%'>
+        <Wrapper>{children}</Wrapper>
+      </Box>
     </Box>
   )
 }

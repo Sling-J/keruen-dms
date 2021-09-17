@@ -1,14 +1,11 @@
 import React, { FC, useState } from 'react'
 
-import { Wrapper } from 'ui'
 import { styled } from 'ui/theme'
+import { Box } from 'ui'
 
 import { Menu } from 'antd'
 
 import { IRoute } from 'modules/common/types'
-import { PeopleIcon } from 'ui/icons'
-
-const { SubMenu } = Menu
 
 interface NavigationProps {
   routes: IRoute[]
@@ -35,8 +32,10 @@ const NavigationWrap = styled.div`
       vertical-align: middle;
     }
 
-    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu,
-    .ant-menu-item, .ant-menu-submenu-title {
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu,
+    .ant-menu-item,
+    .ant-menu-submenu-title {
       padding: 0 24px;
     }
   }
@@ -51,18 +50,20 @@ const Navigation: FC<NavigationProps> = ({ routes }) => {
 
   return (
     <NavigationWrap>
-      <Menu onClick={handleClick} selectedKeys={[current]} mode='horizontal'>
-        {routes.map(route => {
-          const Icon = route.nav.icon
+      <Box maxWidth='1440px' margin='0 auto'>
+        <Menu onClick={handleClick} selectedKeys={[current]} mode='horizontal'>
+          {routes.map(route => {
+            const Icon = route.nav.icon
 
-          return (
-            // @ts-ignore
-            <Menu.Item key={route.key} icon={<Icon />}>
-              {route.nav.name}
-            </Menu.Item>
-          )
-        })}
-      </Menu>
+            return (
+              // @ts-ignore
+              <Menu.Item key={route.key} icon={<Icon />}>
+                {route.nav.name}
+              </Menu.Item>
+            )
+          })}
+        </Menu>
+      </Box>
     </NavigationWrap>
   )
 }
