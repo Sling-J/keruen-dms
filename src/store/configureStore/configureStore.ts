@@ -1,16 +1,21 @@
 import { createStore, Store, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import createThunkErrorHandlerMiddleware from 'redux-thunk-error-handler'
+import { persistStore, Persistor } from 'redux-persist'
 import thunk, { ThunkMiddleware } from 'redux-thunk'
 import { History } from 'history'
+import createThunkErrorHandlerMiddleware from 'redux-thunk-error-handler'
 
-import errorHandler from 'src/settings/errorHandler'
+import apiMiddleware from 'store/configureStore/middleware/api'
+import errorHandler from 'settings/errorHandler'
+import { rootReducer } from 'store/rootReducer'
 
-import { rootReducer } from '../rootReducer'
-import apiMiddleware from './middleware/api'
+interface ConfigureStore {
+  persistor: Persistor
+  store: Store<any>
+}
 
-const configureStore = (initialState: {}, history: History): Store<any> => {
-  return createStore(
+const configureStore = (initialState: {}, history: History): ConfigureStore => {
+  const store = createStore(
     rootReducer,
     initialState,
     composeWithDevTools(
@@ -23,6 +28,17 @@ const configureStore = (initialState: {}, history: History): Store<any> => {
       ),
     ),
   )
+
+  if ((module as any).hot) {
+    // tslint:disable-next-line
+    ;(module as any).hot.accept('../rootReducer', () =>
+      store.replaceReducer(rootReducer),
+    )
+  }
+
+  const persistor = persistStore(store)
+
+  return { persistor, store }
 }
 
 export default configureStore

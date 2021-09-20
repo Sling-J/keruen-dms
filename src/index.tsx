@@ -2,33 +2,43 @@ import React, { FC } from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
+import { ThemeProvider } from 'ui/theme'
 import { Router } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
+import { PersistGate } from 'redux-persist/integration/react'
 import { createBrowserHistory as createHistory } from 'history'
 
-import { ErrorBoundary, RenderRoutes } from 'modules/core/components'
 import { configureStore } from 'src/store/configureStore'
-import { ThemeProvider } from 'ui/theme'
+
+import {
+  ErrorBoundary,
+  PreloadProvider,
+  RenderRoutes,
+} from 'modules/core/components'
 
 import { routes } from 'settings/routes'
 
 import 'assets/main.less'
 
 const history = createHistory()
-const store = configureStore({}, history)
+const { persistor, store } = configureStore({}, history)
 
 const Index: FC = () => {
   return (
     <React.StrictMode>
       <Provider store={store}>
         <ErrorBoundary>
-          <CookiesProvider>
-            <ThemeProvider>
-              <Router history={history}>
-                <RenderRoutes routes={routes}/>
-              </Router>
-            </ThemeProvider>
-          </CookiesProvider>
+          <PersistGate persistor={persistor}>
+            <PreloadProvider history={history}>
+              <CookiesProvider>
+                <ThemeProvider>
+                  <Router history={history}>
+                    <RenderRoutes routes={routes}/>
+                  </Router>
+                </ThemeProvider>
+              </CookiesProvider>s
+            </PreloadProvider>
+          </PersistGate>
         </ErrorBoundary>
       </Provider>
     </React.StrictMode>

@@ -7,6 +7,7 @@ import { LockIcon, LogoIcon, MailIcon } from 'ui/icons'
 import { styled, Theme } from 'ui/theme'
 
 import { Form, Button, Input } from 'antd'
+import { SignInParams } from 'modules/auth/types'
 
 const SignInWrap = styled.div`
   height: 100vh;
@@ -37,14 +38,20 @@ const SignInWrap = styled.div`
   }
 `
 
-const SignIn: FC = () => {
+interface SignInProps {
+  loading: boolean
+  signIn: (body: SignInParams) => void
+}
+
+const SignIn: FC<SignInProps> = ({ loading, signIn }) => {
   const theme: Theme = useTheme()
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+  const onFinish = (values: SignInParams) => {
+    signIn(values)
   }
 
   const onFinishFailed = (errorInfo: any) => {
+    // tslint:disable-next-line:no-console
     console.log('Failed:', errorInfo)
   }
 
@@ -69,7 +76,6 @@ const SignIn: FC = () => {
           <Form
             name='admin-sign-in'
             layout='vertical'
-            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
@@ -78,14 +84,13 @@ const SignIn: FC = () => {
               rules={[
                 {
                   required: true,
-                  type: 'email',
-                  message: 'Не верный формат почты!',
+                  message: 'Введите имя пользователя',
                 },
               ]}
             >
               <Input
                 size='large'
-                placeholder='Введите email'
+                placeholder='Введите имя пользователя'
                 prefix={<MailIcon color={theme.color.primary} />}
               />
             </Form.Item>
@@ -107,7 +112,13 @@ const SignIn: FC = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button type='primary' htmlType='submit' size='large' block>
+              <Button
+                type='primary'
+                htmlType='submit'
+                size='large'
+                loading={loading}
+                block
+              >
                 Войти
               </Button>
             </Form.Item>

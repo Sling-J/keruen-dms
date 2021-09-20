@@ -9,7 +9,7 @@ export default history => ({ dispatch, getState }) => {
   const axiosInterceptors = new AxiosInterceptors(instance)
 
   instance.interceptors.request.use(
-    axiosInterceptors.getRequestSuccess(),
+    axiosInterceptors.getRequestSuccess(getState),
     axiosInterceptors.getRequestError(),
   )
 

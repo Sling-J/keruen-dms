@@ -1,7 +1,17 @@
 import React, { FC, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-import { Button, Tabs, Form, Input, Select, Row, Col, DatePicker } from 'antd'
+import {
+  Button,
+  Tabs,
+  Form,
+  Input,
+  Select,
+  Row,
+  Col,
+  DatePicker,
+  Table,
+} from 'antd'
 import { Box } from 'ui'
 
 import { PageTitle } from 'modules/common/components'
@@ -25,6 +35,192 @@ const TenantCreateWrap = styled.div`
     color: initial;
   }
 `
+
+const columns = [
+  {
+    title: '№ помещения',
+    dataIndex: 'place',
+    key: 'place',
+  },
+  {
+    title: 'Этаж',
+    dataIndex: 'floor',
+    key: 'floor',
+  },
+  {
+    title: 'Площадь',
+    dataIndex: 'space',
+    key: 'space',
+  },
+  {
+    title: 'Расположение на карте',
+    dataIndex: 'map',
+    key: 'map',
+  },
+]
+
+const dataSource = [
+  {
+    id: 1,
+    key: 1,
+    place: '1',
+    floor: '4',
+    space: '5 100 м2',
+    map: 'Посмотреть',
+  },
+]
+
+const columns2 = [
+  {
+    title: 'Дата начала',
+    dataIndex: 'startDate',
+    key: 'startDate',
+  },
+  {
+    title: 'Дата окончания',
+    dataIndex: 'endDate',
+    key: 'endDate',
+  },
+  {
+    title: 'Скидка',
+    dataIndex: 'discount',
+    key: 'discount',
+  },
+]
+
+const dataSource2 = [
+  {
+    id: 1,
+    key: 1,
+    startDate: '01-01-2020',
+    endDate: '28-02-2021',
+    discount: '20%',
+  },
+  {
+    id: 2,
+    key: 2,
+    startDate: '01-01-2020',
+    endDate: '28-02-2021',
+    discount: '30%',
+  },
+]
+
+const columns3 = [
+  {
+    title: 'Платежи',
+    dataIndex: 'payment',
+    key: 'payment',
+  },
+  {
+    title: 'Тип',
+    dataIndex: 'type',
+    key: 'type',
+  },
+  {
+    title: 'Договор',
+    dataIndex: 'docs',
+    key: 'docs',
+  },
+  {
+    title: 'с НДС',
+    dataIndex: 'nds',
+    key: 'nds',
+  },
+]
+
+const dataSource3 = [
+  {
+    id: 1,
+    key: 1,
+    payment: 'АП',
+    type: 'фискированная',
+    docs: '3 249',
+    nds: 'Да',
+  },
+  {
+    id: 2,
+    key: 2,
+    payment: 'ЭП',
+    type: 'фискированная',
+    docs: '1 249',
+    nds: 'Нет',
+  },
+  {
+    id: 3,
+    key: 3,
+    payment: 'РП',
+    type: 'фискированная',
+    docs: '249',
+    nds: 'Да',
+  },
+]
+
+const columns4 = [
+  {
+    title: 'Дата начала',
+    dataIndex: 'startDate',
+    key: 'startDate',
+  },
+  {
+    title: 'Дата окончания',
+    dataIndex: 'endDate',
+    key: 'endDate',
+  },
+  {
+    title: 'Индексация',
+    dataIndex: 'indexation',
+    key: 'indexation',
+  },
+  {
+    title: 'Тип',
+    dataIndex: 'type',
+    key: 'type',
+  },
+  {
+    title: 'Курс',
+    dataIndex: 'currency',
+    key: 'currency',
+  },
+]
+
+const dataSource4 = [
+  {
+    id: 1,
+    key: 1,
+    startDate: '01-01-2020',
+    endDate: '28-02-2021',
+    indexation: 'Нет',
+    type: 'н.д',
+    currency: 'н.д',
+  },
+  {
+    id: 2,
+    key: 3,
+    startDate: '01-01-2020',
+    endDate: '28-02-2021',
+    indexation: 'Нет',
+    type: 'н.д',
+    currency: 'н.д',
+  },
+  {
+    id: 3,
+    key: 3,
+    startDate: '01-01-2020',
+    endDate: '28-02-2021',
+    indexation: 'Нет',
+    type: 'н.д',
+    currency: 'н.д',
+  },
+  {
+    id: 4,
+    key: 4,
+    startDate: '01-01-2020',
+    endDate: '28-02-2021',
+    indexation: 'Нет',
+    type: 'н.д',
+    currency: 'н.д',
+  },
+]
 
 const TenantCreate: FC = () => {
   const history = useHistory()
@@ -64,7 +260,6 @@ const TenantCreate: FC = () => {
             <Form
               name='basic'
               labelCol={{ span: 2 }}
-              initialValues={{ remember: true }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete='off'
@@ -190,22 +385,241 @@ const TenantCreate: FC = () => {
           </Box>
         </TabPane>
         <TabPane tab='Договора' key='2'>
-          <Box className='__tab-item'>Content of Tab Pane 2</Box>
+          <Box className='__tab-item'>
+            <Form
+              name='2'
+              labelCol={{ span: 2 }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete='off'
+            >
+              <Col style={{ marginBottom: '72px' }}>
+                <Form.Item
+                  labelCol={{ span: 8 }}
+                  wrapperCol={{ span: 8 }}
+                  label='Договор аренды №16-ОД-090 от 03.05.2016г., этаж 4, №'
+                  name='brand'
+                >
+                  <DatePicker style={{ width: '100%' }} />
+                </Form.Item>
+
+                <Form.Item
+                  labelCol={{ span: 8 }}
+                  wrapperCol={{ span: 8 }}
+                  label='Доп. соглашение  №1 к договору аренды №16-ОД-090'
+                  name='brand'
+                >
+                  <DatePicker style={{ width: '100%' }} />
+                </Form.Item>
+
+                <Form.Item
+                  labelCol={{ span: 8 }}
+                  wrapperCol={{ span: 8 }}
+                  label='Описание ДС'
+                  name='brand'
+                >
+                  <Input placeholder='Введите текст' />
+                </Form.Item>
+              </Col>
+
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 4 }}
+                label='Дата Акт приема-передачи помещения'
+                name='brand'
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 4 }}
+                label='Дата начала начисления АП'
+                name='brand'
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 4 }}
+                label='Дата начала начисления ЭП'
+                name='brand'
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 4 }}
+                label='Дата начала начисления РП'
+                name='brand'
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </Form.Item>
+            </Form>
+          </Box>
         </TabPane>
         <TabPane tab='Помещения' key='3'>
-          <Box className='__tab-item'>Content of Tab Pane 3</Box>
+          <Box className='__tab-item'>
+            <Table columns={columns} dataSource={dataSource} />
+          </Box>
         </TabPane>
         <TabPane tab='Ставки' key='4'>
-          <Box className='__tab-item'>Content of Tab Pane 4</Box>
+          <Box className='__tab-item'>
+            <Form
+              name='2'
+              labelCol={{ span: 2 }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete='off'
+            >
+              <Row>
+                <Col span={12}>
+                  <Form.Item
+                    labelCol={{ span: 8 }}
+                    label='Договор №1'
+                    name='brand'
+                  >
+                    <RangePicker style={{ width: '100%' }} />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item
+                    labelCol={{ span: 8 }}
+                    label='в USD в год'
+                    name='brand'
+                  >
+                    <Input placeholder='Введите курс' />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Form.Item
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 16 }}
+                label='Таблица'
+              >
+                <Table
+                  dataSource={dataSource3}
+                  columns={columns3}
+                  pagination={false}
+                />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 12 }}
+                label='База для расчета ПР'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 12 }}
+                label='Догоовра для расчета базы ПР'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+            </Form>
+          </Box>
         </TabPane>
         <TabPane tab='Скидки' key='5'>
-          <Box className='__tab-item'>Content of Tab Pane 5</Box>
+          <Box className='__tab-item'>
+            <Table columns={columns2} dataSource={dataSource2} />
+          </Box>
         </TabPane>
-        <TabPane tab='Индексация' key='5'>
-          <Box className='__tab-item'>Content of Tab Pane 6</Box>
+        <TabPane tab='Индексация' key='6'>
+          <Box className='__tab-item'>
+            <Form
+              name='2'
+              labelCol={{ span: 2 }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete='off'
+            >
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 8 }}
+                label='Индексация Договоров'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 8 }}
+                label='Курс по договору'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 8 }}
+                label='Дополнительные условия по индексациии'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+
+              <Form.Item>
+                <Table dataSource={dataSource4} columns={columns4}/>
+              </Form.Item>
+            </Form>
+          </Box>
         </TabPane>
-        <TabPane tab='Обеспечительный взнос' key='6'>
-          <Box className='__tab-item'>Content of Tab Pane 7</Box>
+        <TabPane tab='Обеспечительный взнос' key='7'>
+          <Box className='__tab-item'>
+            <Form
+              name='2'
+              labelCol={{ span: 2 }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete='off'
+            >
+              <Form.Item
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 8 }}
+                label='Обеспечительный взнос'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 8 }}
+                label='Тип'
+                name='brand'
+              >
+                <Select placeholder='Выберите' />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 8 }}
+                label='В размере'
+                name='brand'
+              >
+                <Select placeholder='Выберите' />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 8 }}
+                label='Сумма'
+                name='brand'
+              >
+                <Input placeholder='Введите текст' />
+              </Form.Item>
+            </Form>
+          </Box>
         </TabPane>
       </Tabs>
     </TenantCreateWrap>

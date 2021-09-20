@@ -2,8 +2,26 @@ import { combineReducers, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { AxiosInstance } from 'axios'
 
-export const rootReducer = () => {
-  return combineReducers({})
+import storage from 'redux-persist/lib/storage'
+
+import { CLEAR_ALL } from 'modules/auth/constants/credentials'
+
+import authReducer, {
+  moduleName as authModule,
+} from 'src/modules/auth/reducers'
+
+const reducers = combineReducers({
+  [authModule]: authReducer,
+})
+
+export const rootReducer = (state, action) => {
+  if (action.type === CLEAR_ALL) {
+    storage.removeItem('persist:doco_credentials').then(r => r)
+
+    return reducers(undefined, action)
+  }
+
+  return reducers(state, action)
 }
 
 export type RootState = ReturnType<typeof rootReducer>
@@ -13,11 +31,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   RootState,
   AxiosInstance,
   Action<string>
->
-
-export type AppThunkWithValue<R> = ThunkAction<
-  R,
-  RootState,
-  AxiosInstance,
-  Action<string>
->
+  >

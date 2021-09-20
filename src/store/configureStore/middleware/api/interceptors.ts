@@ -1,6 +1,8 @@
 /* tslint:disable */
 import { AxiosInstance, AxiosRequestConfig } from 'axios'
 
+import { moduleName as authModule } from 'modules/auth/reducers'
+
 class AxiosInterceptors {
   private instance: AxiosInstance
 
@@ -8,10 +10,20 @@ class AxiosInterceptors {
     this.instance = instance
   }
 
-  getRequestSuccess() {
+  getRequestSuccess(getState) {
     return function(config: AxiosRequestConfig) {
+      const access_token = getState()[authModule].credentials.access_token
+
+      if (config.url.indexOf('refresh') >= 0) {
+        return config
+      }
+
       return {
         ...config,
+        headers: {
+          ...config.headers,
+          Authorization: 'Bearer ' + access_token,
+        },
       }
     }
   }
@@ -25,7 +37,7 @@ class AxiosInterceptors {
   }
 
   getResponseSuccess() {
-    return function(response) {
+    return response => {
       return response
     }
   }
