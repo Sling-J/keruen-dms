@@ -10,8 +10,13 @@ import authReducer, {
   moduleName as authModule,
 } from 'src/modules/auth/reducers'
 
+import usersReducer, {
+  moduleName as usersModule,
+} from 'src/modules/users/reducers'
+
 const reducers = combineReducers({
   [authModule]: authReducer,
+  [usersModule]: usersReducer,
 })
 
 export const rootReducer = (state, action) => {
@@ -31,4 +36,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   RootState,
   AxiosInstance,
   Action<string>
-  >
+>

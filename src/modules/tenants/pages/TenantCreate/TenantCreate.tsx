@@ -279,7 +279,7 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='Категория'
-                    name='brand'
+                    name='category'
                   >
                     <Select placeholder='Выберите категорию' />
                   </Form.Item>
@@ -288,7 +288,7 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='Тематика'
-                    name='brand'
+                    name='theme'
                   >
                     <Select placeholder='Выберите тематику' />
                   </Form.Item>
@@ -298,7 +298,7 @@ const TenantCreate: FC = () => {
                   <Form.Item
                     labelCol={{ span: 8 }}
                     label='Директор'
-                    name='brand'
+                    name='boss'
                   >
                     <Input placeholder='Введите имя директора' />
                   </Form.Item>
@@ -306,12 +306,17 @@ const TenantCreate: FC = () => {
                   <Form.Item
                     labelCol={{ span: 8 }}
                     label='Контактный Телефон'
-                    name='brand'
+                    name='phone'
                   >
                     <Input placeholder='Введите e-mail' />
                   </Form.Item>
 
-                  <Form.Item labelCol={{ span: 8 }} label='E-mail' name='email'>
+                  <Form.Item
+                    labelCol={{ span: 8 }}
+                    rules={[{ type: 'email' }]}
+                    label='E-mail'
+                    name='email'
+                  >
                     <Input placeholder='Введите e-mail' />
                   </Form.Item>
                 </Col>
@@ -323,7 +328,7 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='Организация'
-                    name='brand'
+                    name='organization'
                   >
                     <Input placeholder='Введите организацию' />
                   </Form.Item>
@@ -332,7 +337,7 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='Юр. адрес'
-                    name='brand'
+                    name='address'
                   >
                     <Input placeholder='Введите юр. адрес' />
                   </Form.Item>
@@ -341,7 +346,7 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='БИН/ИИН'
-                    name='brand'
+                    name='iin'
                   >
                     <Input placeholder='Введите БИН/ИИН' />
                   </Form.Item>
@@ -350,7 +355,7 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='IBAN'
-                    name='brand'
+                    name='iban'
                   >
                     <Input placeholder='Введите IBAN' />
                   </Form.Item>
@@ -359,17 +364,17 @@ const TenantCreate: FC = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     label='БИК'
-                    name='brand'
+                    name='bik'
                   >
                     <Input placeholder='Введите БИК' />
                   </Form.Item>
                 </Col>
 
                 <Col span={12}>
-                  <Form.Item labelCol={{ span: 12 }} label='НДС Плательщик'>
+                  <Form.Item labelCol={{ span: 8 }} label='НДС Плательщик'>
                     <Row>
                       <Col span={18}>
-                        <RangePicker />
+                        <RangePicker style={{ width: '100%' }} />
                       </Col>
                       <Col span={6}>
                         <Select value='yes'>
@@ -398,7 +403,7 @@ const TenantCreate: FC = () => {
                   labelCol={{ span: 8 }}
                   wrapperCol={{ span: 8 }}
                   label='Договор аренды №16-ОД-090 от 03.05.2016г., этаж 4, №'
-                  name='brand'
+                  name='lease_contract'
                 >
                   <DatePicker style={{ width: '100%' }} />
                 </Form.Item>
@@ -407,7 +412,7 @@ const TenantCreate: FC = () => {
                   labelCol={{ span: 8 }}
                   wrapperCol={{ span: 8 }}
                   label='Доп. соглашение  №1 к договору аренды №16-ОД-090'
-                  name='brand'
+                  name='agreement'
                 >
                   <DatePicker style={{ width: '100%' }} />
                 </Form.Item>
@@ -416,7 +421,7 @@ const TenantCreate: FC = () => {
                   labelCol={{ span: 8 }}
                   wrapperCol={{ span: 8 }}
                   label='Описание ДС'
-                  name='brand'
+                  name='description'
                 >
                   <Input placeholder='Введите текст' />
                 </Form.Item>
@@ -426,7 +431,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 4 }}
                 label='Дата Акт приема-передачи помещения'
-                name='brand'
+                name='date_of_act'
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
@@ -435,7 +440,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 4 }}
                 label='Дата начала начисления АП'
-                name='brand'
+                name='start_date_of_ap'
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
@@ -444,7 +449,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 4 }}
                 label='Дата начала начисления ЭП'
-                name='brand'
+                name='start_date_of_ep'
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
@@ -453,7 +458,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 4 }}
                 label='Дата начала начисления РП'
-                name='brand'
+                name='start_date_of_rp'
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
@@ -479,7 +484,7 @@ const TenantCreate: FC = () => {
                   <Form.Item
                     labelCol={{ span: 8 }}
                     label='Договор №1'
-                    name='brand'
+                    name='contract_1'
                   >
                     <RangePicker style={{ width: '100%' }} />
                   </Form.Item>
@@ -488,7 +493,7 @@ const TenantCreate: FC = () => {
                   <Form.Item
                     labelCol={{ span: 8 }}
                     label='в USD в год'
-                    name='brand'
+                    name='price'
                   >
                     <Input placeholder='Введите курс' />
                   </Form.Item>
@@ -511,7 +516,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 12 }}
                 label='База для расчета ПР'
-                name='brand'
+                name='base_pr'
               >
                 <Input placeholder='Введите текст' />
               </Form.Item>
@@ -520,7 +525,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 12 }}
                 label='Догоовра для расчета базы ПР'
-                name='brand'
+                name='contract_pr'
               >
                 <Input placeholder='Введите текст' />
               </Form.Item>
@@ -554,7 +559,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 8 }}
                 label='Курс по договору'
-                name='brand'
+                name='contract_price'
               >
                 <Input placeholder='Введите текст' />
               </Form.Item>
@@ -563,13 +568,13 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 8 }}
                 label='Дополнительные условия по индексациии'
-                name='brand'
+                name='indexation_service'
               >
                 <Input placeholder='Введите текст' />
               </Form.Item>
 
               <Form.Item>
-                <Table dataSource={dataSource4} columns={columns4}/>
+                <Table dataSource={dataSource4} columns={columns4} />
               </Form.Item>
             </Form>
           </Box>
@@ -587,7 +592,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 8 }}
                 label='Обеспечительный взнос'
-                name='brand'
+                name='start_price'
               >
                 <Input placeholder='Введите текст' />
               </Form.Item>
@@ -596,7 +601,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 8 }}
                 label='Тип'
-                name='brand'
+                name='type'
               >
                 <Select placeholder='Выберите' />
               </Form.Item>
@@ -605,7 +610,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 8 }}
                 label='В размере'
-                name='brand'
+                name='rate_off'
               >
                 <Select placeholder='Выберите' />
               </Form.Item>
@@ -614,7 +619,7 @@ const TenantCreate: FC = () => {
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 8 }}
                 label='Сумма'
-                name='brand'
+                name='price'
               >
                 <Input placeholder='Введите текст' />
               </Form.Item>

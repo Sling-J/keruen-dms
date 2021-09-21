@@ -7,6 +7,7 @@ import TenantCreate from 'modules/tenants/containers/TenantCreate'
 
 enum KEYS {
   TENANTS = 'TENANTS',
+  TENANTS_CREATE = 'TENANTS_CREATE',
 }
 
 export const getRoutes = key => [
@@ -18,7 +19,7 @@ export const getRoutes = key => [
   },
   {
     path: '/tenants/create',
-    key: getDashedStr(key, KEYS.TENANTS),
+    key: getDashedStr(key, KEYS.TENANTS_CREATE),
     exact: false,
     component: TenantCreate,
   },

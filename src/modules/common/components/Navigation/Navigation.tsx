@@ -1,4 +1,5 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 import { styled } from 'ui/theme'
 import { Box } from 'ui'
@@ -42,7 +43,18 @@ const NavigationWrap = styled.div`
 `
 
 const Navigation: FC<NavigationProps> = ({ routes }) => {
-  const [current, setCurrent] = useState('mail')
+  const [current, setCurrent] = useState('')
+  const { pathname } = useLocation()
+
+  const currentRoutePath = `/${pathname.split('/')[1]}`
+
+  useEffect(() => {
+    if (currentRoutePath !== '/') {
+      setCurrent(currentRoutePath)
+    } else {
+      setCurrent(routes[0].path)
+    }
+  }, [])
 
   const handleClick = e => {
     setCurrent(e.key)
@@ -57,8 +69,8 @@ const Navigation: FC<NavigationProps> = ({ routes }) => {
 
             return (
               // @ts-ignore
-              <Menu.Item key={route.key} icon={<Icon />}>
-                {route.nav.name}
+              <Menu.Item key={route.path} icon={<Icon />}>
+                <Link to={route.path}>{route.nav.name}</Link>
               </Menu.Item>
             )
           })}

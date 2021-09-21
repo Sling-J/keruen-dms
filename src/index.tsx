@@ -2,11 +2,14 @@ import React, { FC } from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
-import { ThemeProvider } from 'ui/theme'
 import { Router } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
 import { PersistGate } from 'redux-persist/integration/react'
 import { createBrowserHistory as createHistory } from 'history'
+
+import ru_RU from 'antd/lib/locale/ru_RU'
+import { ThemeProvider } from 'ui/theme'
+import { ConfigProvider } from 'antd'
 
 import { configureStore } from 'src/store/configureStore'
 
@@ -32,11 +35,14 @@ const Index: FC = () => {
             <PreloadProvider history={history}>
               <CookiesProvider>
                 <ThemeProvider>
-                  <Router history={history}>
-                    <RenderRoutes routes={routes}/>
-                  </Router>
+                  <ConfigProvider locale={ru_RU}>
+                    <Router history={history}>
+                      <RenderRoutes routes={routes} />
+                    </Router>
+                  </ConfigProvider>
                 </ThemeProvider>
-              </CookiesProvider>s
+              </CookiesProvider>
+              s
             </PreloadProvider>
           </PersistGate>
         </ErrorBoundary>

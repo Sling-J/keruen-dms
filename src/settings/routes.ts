@@ -1,6 +1,7 @@
 import { RenderRoutes, RenderMainRoutes } from 'modules/core/components'
 
 import { getRoutes as getAuthRoutes } from 'modules/auth/routes'
+import { getRoutes as getUsersRoutes } from 'modules/users/routes'
 import { getRoutes as getTenantsRoutes } from 'modules/tenants/routes'
 
 import { PeopleIcon } from 'ui/icons'
@@ -8,6 +9,7 @@ import { PeopleIcon } from 'ui/icons'
 enum KEYS {
   AUTH = 'AUTH',
   INDEX = 'INDEX',
+  USERS = 'USERS',
   TENANTS = 'TENANTS',
   DASHBOARD = 'DASHBOARD',
   CONTRACTS = 'CONTRACTS',
@@ -33,6 +35,18 @@ const mainRoutes = [
     component: RenderRoutes,
     nav: {
       name: 'Арендаторы',
+      icon: PeopleIcon,
+      childs: [],
+    },
+  },
+  {
+    path: '/users',
+    key: KEYS.USERS,
+    exact: false,
+    routes: getUsersRoutes(KEYS.USERS),
+    component: RenderRoutes,
+    nav: {
+      name: 'Пользователи',
       icon: PeopleIcon,
       childs: [],
     },
